@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocalStorage } from 'usehooks-ts'
 
 export default function Basket(props) {
-  const { cartItems, onAdd, onRemove, saveCheckout } = props;
+  const { cartItems, onAdd, onRemove, saveCheckout, onDel } = props;
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   
   const totalPrice = itemsPrice;
@@ -22,7 +22,7 @@ export default function Basket(props) {
         {cartItems.length === 0 && <div>Cart is empty</div>}
         {cartItems.map((item) => (
           <div key={item.id} className="row">
-            <a class="btn  col-1 bi bi-x-circle" onClick={() => onRemove(item)} style={{marginRight:'2%'}}></a>
+            <a class="btn  col-1 bi bi-x-circle" onClick={() => onDel(item)} style={{marginRight:'2%'}}></a>
             
             <div className="col-5">{item.title}</div>
             <div className="col-2">

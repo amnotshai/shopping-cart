@@ -11,11 +11,14 @@ function App() {
   const [products, setProds]= useState([]);
   const [cartItems, setCartItems] = useState(cartFromLStorage);
   const [Carts, setCheckout]=useLocalStorage('purchase',JSON.stringify(cartItems));
+
+  
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
     .then(res => res.json())
     .then(value =>setProds(value))
   }, [])
+  
 
   useEffect(() => {
     localStorage.setItem('cart',JSON.stringify(cartItems));
@@ -50,13 +53,20 @@ function App() {
       );
     }
   };
+  const onDel =(product) =>{
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist) {
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } 
+
+  };
   return (
     <div className="App">
       <Header  countCartItems={cartItems.length}></Header>
       <div class="container-fluid">
         <div className="row" style={{width:'100%'}}>
           
-          <Main onRemove={onRemove} cartItems={cartItems}  products={products} onAdd={onAdd}></Main>
+          <Main onRemove={onRemove} cartItems={cartItems} products={products} onAdd={onAdd}></Main>
 
           
           
@@ -65,6 +75,7 @@ function App() {
             onAdd={onAdd}
             onRemove={onRemove}
             saveCheckout={saveCheckout}
+            onDel={onDel}
           ></Basket>
         </div>
 
