@@ -1,18 +1,14 @@
 import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useLocalStorage } from 'usehooks-ts'
+
 
 export default function Basket(props) {
-  const { cartItems, onAdd, onRemove, saveCheckout, onDel } = props;
+  const { cartItems, onAdd, onRemove, onDel } = props;
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   
+  
   const totalPrice = itemsPrice;
-  
-  
- 
-
-  
 
   
   return (
@@ -59,7 +55,7 @@ export default function Basket(props) {
             </div>
             <hr />
             <div className="row">
-              <button onClick={()=>saveCheckout(cartItems)}>
+              <button onClick={()=>localStorage.setItem('purchase',JSON.stringify(cartItems))}>
                 Checkout
               </button>
             </div>

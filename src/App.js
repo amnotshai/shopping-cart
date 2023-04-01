@@ -3,14 +3,14 @@ import Main from './components/Main';
 import Basket from './components/Basket';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from 'react';
-import { useLocalStorage } from 'usehooks-ts'
+
 
 const cartFromLStorage= JSON.parse(localStorage.getItem('cart') ||'[]');
 function App() {
   
   const [products, setProds]= useState([]);
   const [cartItems, setCartItems] = useState(cartFromLStorage);
-  const [Carts, setCheckout]=useLocalStorage('purchase',JSON.stringify(cartItems));
+  
 
   
   useEffect(() => {
@@ -23,9 +23,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem('cart',JSON.stringify(cartItems));
   }, [cartItems])
-  const saveCheckout =(cartItem)=>{
-      setCheckout();
-  }
+  
 
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
@@ -74,7 +72,7 @@ function App() {
             cartItems={cartItems}
             onAdd={onAdd}
             onRemove={onRemove}
-            saveCheckout={saveCheckout}
+            
             onDel={onDel}
           ></Basket>
         </div>
