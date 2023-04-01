@@ -1,4 +1,6 @@
 import React from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocalStorage } from 'usehooks-ts'
 
 export default function Basket(props) {
@@ -20,6 +22,7 @@ export default function Basket(props) {
         {cartItems.length === 0 && <div>Cart is empty</div>}
         {cartItems.map((item) => (
           <div key={item.id} className="row">
+            <a class="btn  col-1 bi bi-x-circle" onClick={() => onRemove(item)} style={{marginRight:'2%'}}></a>
             
             <div className="col-5">{item.title}</div>
             <div className="col-2">

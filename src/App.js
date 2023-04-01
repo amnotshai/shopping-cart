@@ -5,10 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts'
 
+const cartFromLStorage= JSON.parse(localStorage.getItem('cart') ||'[]');
 function App() {
   
   const [products, setProds]= useState([]);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(cartFromLStorage);
   const [Carts, setCheckout]=useLocalStorage('purchase',JSON.stringify(cartItems));
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
@@ -16,6 +17,9 @@ function App() {
     .then(value =>setProds(value))
   }, [])
 
+  useEffect(() => {
+    localStorage.setItem('cart',JSON.stringify(cartItems));
+  }, [cartItems])
   const saveCheckout =(cartItem)=>{
       setCheckout();
   }
@@ -52,7 +56,7 @@ function App() {
       <div class="container-fluid">
         <div className="row" style={{width:'100%'}}>
           
-          <Main onRemove={onRemove}  products={products} onAdd={onAdd}></Main>
+          <Main onRemove={onRemove} cartItems={cartItems}  products={products} onAdd={onAdd}></Main>
 
           
           
